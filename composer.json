@@ -1,0 +1,23 @@
+{
+  "name": "eilander/repository",
+  "description": "Flexible Laravel 5 repository package.",
+  "keywords": ["laravel", "repository", "fractal" , "laravel5"],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Mark Eilander",
+      "email": "mark.eilander@outlook.com"
+    }
+  ],
+  "require": {
+      "php": ">=5.5.9",
+      "laravel/framework": "5.1.*|5.2.*",
+      "elasticsearch/elasticsearch": "~2.0",
+      "ruflin/elastica": "^2.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Eilander\\Repository\\": "src/"
+    }
+  }
+}
