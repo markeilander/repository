@@ -14,6 +14,7 @@ trait Filterable{
      *
      * @param $model
      * @param RepositoryInterface $repository
+     * @param $forceAndWHere should force and for where clauses
      * @return mixed
      */
     public function filter($model, $fieldsSearchable)
@@ -25,6 +26,7 @@ trait Filterable{
         $sortedBy           = Request::get( config('repository.criteria.params.sortedBy','sortedBy') , 'asc');
         $with               = Request::get( config('repository.criteria.params.with','with') , null);
         $sortedBy           = !empty($sortedBy) ? $sortedBy : 'asc';
+        $forceAndWHere      = Request::get( config('repository.criteria.params.forceAnd','forceAnd'), false);
 
         if ( $search && is_array($fieldsSearchable) && count($fieldsSearchable) )
         {
@@ -33,7 +35,7 @@ trait Filterable{
             $isFirstField       = true;
             $searchData         = $this->parserSearchData($search);
             $search             = $this->parserSearchValue($search);
-            $modelForceAndWhere = false;
+            $modelForceAndWhere = $this->parserForceAndWhere($forceAndWHere);
             $model = $model->where(function ($query) use($fields, $search, $searchData, $isFirstField, $modelForceAndWhere) {
                 foreach ($fields as $field=>$condition) {
                     if (is_numeric($field)){
@@ -76,6 +78,15 @@ trait Filterable{
             $model = $model->with($with);
         }
         return $model;
+    }
+    /**
+     * @param $value
+     * @return bool
+     */
+    protected function parserForceAndWhere($value)
+    {
+        $acceptable = [true, 1, '1'];
+        return (in_array($value, $acceptable, true) ? true : false);
     }
     /**
      * @param $search
