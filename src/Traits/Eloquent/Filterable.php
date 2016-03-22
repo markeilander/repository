@@ -85,7 +85,7 @@ trait Filterable{
      */
     protected function parserForceAndWhere($value)
     {
-        $acceptable = [true, 1, '1'];
+        $acceptable = [true, 'true', 1, '1'];
         return (in_array($value, $acceptable, true) ? true : false);
     }
     /**
