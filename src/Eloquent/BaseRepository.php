@@ -1,21 +1,20 @@
 <?php
+
 namespace Eilander\Repository\Eloquent;
 
-use Event;
-use Input;
 use Eilander\Repository\Contracts\Eloquent as Repository;
-use Eilander\Repository\Contracts\Filterable;
-use Eilander\Repository\Traits\Eloquent\Filterable as Filter;
 use Eilander\Repository\Events\Eloquent\Created as EventCreated;
 use Eilander\Repository\Events\Eloquent\Creating as EventCreating;
 use Eilander\Repository\Events\Eloquent\Deleted as EventDeleted;
 use Eilander\Repository\Events\Eloquent\Updated as EventUpdated;
 use Eilander\Repository\RepositoryException;
-use Illuminate\Database\Eloquent\Model;
+use Eilander\Repository\Traits\Eloquent\Filterable as Filter;
+use Event;
 use Illuminate\Container\Container as Application;
+use Illuminate\Database\Eloquent\Model;
+
 /**
- * Class BaseRepository
- * @package Prettus\Repository\Eloquent
+ * Class BaseRepository.
  */
 abstract class BaseRepository implements Repository
 {
@@ -31,18 +30,19 @@ abstract class BaseRepository implements Repository
     /**
      * @var array
      */
-    protected $fieldSearchable = array();
+    protected $fieldSearchable = [];
     /**
      * @var array
      */
-    protected $isUsedBy = array();
+    protected $isUsedBy = [];
     /**
      * @var string
      */
     public $with = '';
     /**
-     * Catch relations to fill presenter
+     * Catch relations to fill presenter.
      */
+
     /**
      * @param Application $app
      */
@@ -51,12 +51,14 @@ abstract class BaseRepository implements Repository
         $this->app = $app;
         $this->makeModel();
     }
+
     /**
-     * Specify Model class name
+     * Specify Model class name.
      *
      * @return string
      */
     abstract public function model();
+
     /**
      * @throws RepositoryException
      */
@@ -66,7 +68,7 @@ abstract class BaseRepository implements Repository
     }
 
     /**
-     * Get Searchable Fields
+     * Get Searchable Fields.
      *
      * @return array
      */
@@ -74,8 +76,9 @@ abstract class BaseRepository implements Repository
     {
         return $this->fieldSearchable;
     }
+
     /**
-     * Get Repository classes
+     * Get Repository classes.
      *
      * @return array
      */
@@ -83,9 +86,11 @@ abstract class BaseRepository implements Repository
     {
         return $this->isUsedBy;
     }
+
     /**
-     * @return Model
      * @throws RepositoryException
+     *
+     * @return Model
      */
     protected function makeModel()
     {
@@ -96,77 +101,95 @@ abstract class BaseRepository implements Repository
         // parse url filters on the model
         return $this->model = $this->filter($model, $this->getFieldsSearchable());
     }
+
     /**
-     * Wrapper result data
+     * Wrapper result data.
      *
      * @param mixed $result
+     *
      * @return mixed
      */
     protected function parserResult($result)
     {
         return $result;
     }
+
     /**
-     * Retrieve all data of repository
+     * Retrieve all data of repository.
      *
      * @param array $columns
+     *
      * @return mixed
      */
-    public function all($columns = array('*'))
+    public function all($columns = ['*'])
     {
-        if ( $this->model instanceof \Illuminate\Database\Eloquent\Builder ){
+        if ($this->model instanceof \Illuminate\Database\Eloquent\Builder) {
             $results = $this->model->get($columns);
         } else {
             $results = $this->model->all($columns);
         }
         $this->resetModel();
+
         return $this->parserResult($results);
     }
+
     /**
-     * Retrieve all data of repository, paginated
-     * @param null $limit
+     * Retrieve all data of repository, paginated.
+     *
+     * @param null  $limit
      * @param array $columns
+     *
      * @return mixed
      */
-    public function paginate($limit = null, $columns = array('*'))
+    public function paginate($limit = null, $columns = ['*'])
     {
         $limit = is_null($limit) ? config('repository.pagination.limit', 15) : $limit;
         $results = $this->model->select($columns)->paginate($limit);
         $this->resetModel();
+
         return $this->parserResult($results);
     }
+
     /**
-     * Find data by id
+     * Find data by id.
      *
      * @param $id
      * @param array $columns
+     *
      * @return mixed
      */
-    public function find($id, $columns = array('*'))
+    public function find($id, $columns = ['*'])
     {
         $model = $this->model->findOrFail($id, $columns);
         $this->resetModel();
+
         return $this->parserResult($model);
     }
+
     /**
-     * Find data by field and value
+     * Find data by field and value.
      *
      * @param $field
      * @param $value
      * @param array $columns
+     *
      * @return mixed
      */
-    public function findByField($field, $value = null, $columns = array('*'))
+    public function findByField($field, $value = null, $columns = ['*'])
     {
-        $model = $this->model->where($field,'=',$value)->get($columns);
+        $model = $this->model->where($field, '=', $value)->get($columns);
         $this->resetModel();
+
         return $this->parserResult($model);
     }
+
     /**
-     * Save a new entity in repository
+     * Save a new entity in repository.
+     *
+     * @param array $attributes
      *
      * @throws ValidatorException
-     * @param array $attributes
+     *
      * @return mixed
      */
     public function create(array $attributes)
@@ -181,12 +204,15 @@ abstract class BaseRepository implements Repository
 
         return $this->parserResult($model);
     }
+
     /**
-     * Update a entity in repository by id
+     * Update a entity in repository by id.
      *
-     * @throws ValidatorException
      * @param array $attributes
      * @param $id
+     *
+     * @throws ValidatorException
+     *
      * @return mixed
      */
     public function update(array $attributes, $id)
@@ -200,10 +226,12 @@ abstract class BaseRepository implements Repository
 
         return $this->parserResult($model);
     }
+
     /**
-     * Delete a entity in repository by id
+     * Delete a entity in repository by id.
      *
      * @param $id
+     *
      * @return int
      */
     public function delete($id)
@@ -217,43 +245,49 @@ abstract class BaseRepository implements Repository
 
         return $deleted;
     }
+
     /**
-     * Load relations
+     * Load relations.
      *
      * @param array|string $relations
+     *
      * @return $this
      */
     public function with($relations)
     {
         $this->with = $relations;
         $this->model = $this->model->with($this->with);
+
         return $this;
     }
 
     /**
-     * Load relations
+     * Load relations.
      *
      * @param array|string $relations
+     *
      * @return $this
      */
     public function where(array $where)
     {
         foreach ($where as $field => $value) {
-            if ( is_array($value) ) {
+            if (is_array($value)) {
                 list($field, $condition, $val) = $value;
-                $this->model = $this->model->where($field,$condition,$val);
+                $this->model = $this->model->where($field, $condition, $val);
             } else {
-                $this->model = $this->model->where($field,'=',$value);
+                $this->model = $this->model->where($field, '=', $value);
             }
         }
+
         return $this;
     }
 
-    public function __call($method, $args) {
+    public function __call($method, $args)
+    {
         try {
-            return call_user_func_array(array($this->model, $method), $args);
-        } catch(Exception $e) {
-            throw new RepositoryException('Method '. $method. ' does not exist.');
+            return call_user_func_array([$this->model, $method], $args);
+        } catch (Exception $e) {
+            throw new RepositoryException('Method '.$method.' does not exist.');
         }
     }
 }

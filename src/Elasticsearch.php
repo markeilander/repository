@@ -1,7 +1,9 @@
-<?php namespace Eilander\Repository;
+<?php
+
+namespace Eilander\Repository;
 
 use Eilander\Repository\Collections\ElasticsearchCollection;
 
-class Elasticsearch extends ElasticsearchCollection {
-
+class Elasticsearch extends ElasticsearchCollection
+{
 }

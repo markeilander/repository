@@ -1,16 +1,16 @@
 <?php
+
 namespace Eilander\Repository\Contracts;
 
 /**
- * Interface Filterable
- * @package Eilander\Gateway\Contracts
+ * Interface Filterable.
  */
 interface Filterable
 {
     /**
-     * add filters
+     * add filters.
      *
      * @param string $filters
      */
-    function filters($filters = '');
+    public function filters($filters = '');
 }

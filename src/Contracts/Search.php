@@ -1,16 +1,18 @@
 <?php
+
 namespace Eilander\Repository\Contracts;
 
 /**
- * Interface Search
- * @package Eilander\Repository\Contracts
+ * Interface Search.
  */
 interface Search extends Repository
 {
     /**
-     * Filter/query search results
+     * Filter/query search results.
+     *
      * @param array|string $request
+     *
      * @return mixed
      */
-    public function search($request = array('*'));
+    public function search($request = ['*']);
 }

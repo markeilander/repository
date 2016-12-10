@@ -5,13 +5,14 @@ namespace Eilander\Repository\Events\Eloquent;
 use Eilander\Repository\Events\EloquentEvent;
 
 /**
- * Clean cache when new entity/model is created
+ * Clean cache when new entity/model is created.
  *
  * @author Eilander
  */
-class Created extends EloquentEvent {
+class Created extends EloquentEvent
+{
     /**
      * @var string
      */
-    protected $action = "created";
+    protected $action = 'created';
 }

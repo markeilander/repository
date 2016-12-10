@@ -5,8 +5,7 @@ namespace Eilander\Repository\Providers;
 use Illuminate\Support\ServiceProvider;
 
 /**
- * Class RepositoryServiceProvider
- * @package Eilander\Repository\Providers
+ * Class RepositoryServiceProvider.
  */
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -18,19 +17,18 @@ class RepositoryServiceProvider extends ServiceProvider
     protected $defer = false;
 
     /**
-     *
      * @return void
      */
     public function boot()
     {
         $this->publishes([
-            __DIR__ . '/../Config/Repository.php' => config_path('repository.php')
+            __DIR__.'/../Config/Repository.php' => config_path('repository.php'),
         ]);
         $this->mergeConfigFrom(
-            __DIR__ . '/../Config/Repository.php', 'repository'
+            __DIR__.'/../Config/Repository.php', 'repository'
         );
 
-        $this->loadTranslationsFrom(__DIR__ . '/../lang', 'repository');
+        $this->loadTranslationsFrom(__DIR__.'/../lang', 'repository');
     }
 
     /**

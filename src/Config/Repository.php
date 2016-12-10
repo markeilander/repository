@@ -13,8 +13,8 @@ return [
     |--------------------------------------------------------------------------
     |
     */
-    'pagination'=>[
-        'limit'=>15
+    'pagination'=> [
+        'limit'=> 15,
     ],
 
     /*
@@ -23,7 +23,7 @@ return [
     |--------------------------------------------------------------------------
     |
     */
-    'cache'=>[
+    'cache'=> [
         /*
          |--------------------------------------------------------------------------
          | Cache Status
@@ -44,9 +44,9 @@ return [
          */
         'store'   => [
             'path' => storage_path('eilander/repository/'),
-            'file' => 'cached-keys.json'
+            'file' => 'cached-keys.json',
         ],
-        'search'=>[
+        'search'=> [
             /*
             |--------------------------------------------------------------------------
             | Methods Allowed
@@ -62,9 +62,9 @@ return [
             |
             | 'except'  =>['filter'],
             */
-             'allowed'=>[
-                 'only'  =>null,
-                 'except'=>null
+             'allowed'=> [
+                 'only'  => null,
+                 'except'=> null,
              ],
 
              /*
@@ -104,11 +104,11 @@ return [
                   |
                   */
                 'on' => [
-                    'search'=>true,
-                ]
-            ]
+                    'search'=> true,
+                ],
+            ],
         ],
-        'repository'=>[
+        'repository'=> [
             /*
             |--------------------------------------------------------------------------
             | Methods Allowed
@@ -124,9 +124,9 @@ return [
             |
             | 'except'  =>['where'],
             */
-             'allowed'=>[
-                 'only'  =>null,
-                 'except'=>null
+             'allowed'=> [
+                 'only'  => null,
+                 'except'=> null,
              ],
 
              /*
@@ -168,12 +168,12 @@ return [
                   |
                   */
                 'on' => [
-                    'create'=>true,
-                    'update'=>true,
-                    'delete'=>true,
-                ]
-            ]
-        ]
+                    'create'=> true,
+                    'update'=> true,
+                    'delete'=> true,
+                ],
+            ],
+        ],
     ],
     /*
     |--------------------------------------------------------------------------
@@ -183,7 +183,7 @@ return [
     | Settings of request parameters names that will be used by Criteria
     |
     */
-    'criteria'=>[
+    'criteria'=> [
         /*
         |--------------------------------------------------------------------------
         | Accepted Conditions
@@ -199,8 +199,8 @@ return [
         | $query->where('foo','like','bar')
         |
         */
-        'acceptedConditions'=>[
-            '=','like'
+        'acceptedConditions'=> [
+            '=', 'like',
         ],
         /*
         |--------------------------------------------------------------------------
@@ -234,13 +234,13 @@ return [
         |   http://eilander.local/?search=lorem&orderBy=id&sortedBy=desc
         |
         */
-        'params'=>[
-            'search'        =>'search',
-            'searchFields'  =>'searchFields',
-            'filter'        =>'filter',
-            'orderBy'       =>'orderBy',
-            'sortedBy'      =>'sortedBy',
-            'with'          =>'include'
-        ]
-    ]
+        'params'=> [
+            'search'        => 'search',
+            'searchFields'  => 'searchFields',
+            'filter'        => 'filter',
+            'orderBy'       => 'orderBy',
+            'sortedBy'      => 'sortedBy',
+            'with'          => 'include',
+        ],
+    ],
 ];

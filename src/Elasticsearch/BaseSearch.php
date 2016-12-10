@@ -1,19 +1,18 @@
 <?php
+
 namespace Eilander\Repository\Elasticsearch;
 
-use Event;
-use Input;
-use Eilander\Repository\RepositoryException;
 use Eilander\Repository\Contracts\Search;
-use Eilander\Repository\Contracts\Filterable;
-use Eilander\Repository\Events\Elasticsearch\Search as EventSearched;
+use Eilander\Repository\RepositoryException;
 use Eilander\Repository\Traits\Elasticsearch\Filterable as Filter;
 use Eilander\Repository\Traits\Elasticsearch\Parser;
 use Elasticsearch\ClientBuilder as ElasticsearchClient;
+use Event;
 use Illuminate\Container\Container as Application;
+use Input;
+
 /**
- * Class BaseSearch
- * @package Eilander\Repository\Elasticsearch
+ * Class BaseSearch.
  */
 abstract class BaseSearch implements Search
 {
@@ -27,52 +26,60 @@ abstract class BaseSearch implements Search
      */
     protected $client;
     /**
-     * Which database should be used, defaults to config setting
+     * Which database should be used, defaults to config setting.
+     *
      * @var Index
      */
     protected $index;
     /**
-     * Which table should me used
+     * Which table should me used.
+     *
      * @var Type
      */
     protected $type;
     /**
-     * Which model should we use
+     * Which model should we use.
+     *
      * @var Model
      */
     protected $model;
     /**
-     * Query filters
+     * Query filters.
+     *
      * @var Model
      */
     protected $filters = '';
 
     protected $extendedBounds = '';
+
     /**
      * @param Application $app
      */
     public function __construct(Application $app)
     {
-        $hosts = array (
-            env('ELASTIC_HOST', 'localhost:9200')
-        );
+        $hosts = [
+            env('ELASTIC_HOST', 'localhost:9200'),
+        ];
         $this->client = ElasticsearchClient::create()->setHosts($hosts)->build();
-        $this->index = config("database.connections.elasticsearch.index");
+        $this->index = config('database.connections.elasticsearch.index');
         $this->app = $app;
         $this->filter(Input::get('filter'));
     }
+
     /**
-     * Specify Table
+     * Specify Table.
      *
      * @return string
      */
     abstract public function type();
+
     /**
-     * Specify Table
+     * Specify Table.
      *
      * @return string
      */
     abstract public function model();
+
     /**
      * @throws RepositoryException
      */
@@ -80,19 +87,24 @@ abstract class BaseSearch implements Search
     {
         $this->makeModel();
     }
+
     /**
-     * @return Model
      * @throws RepositoryException
+     *
+     * @return Model
      */
     protected function makeModel($data)
     {
-        $model = $this->app->make($this->model(), array($data));
+        $model = $this->app->make($this->model(), [$data]);
+
         return $this->model = $model;
     }
+
     /**
-     * Search query in elasticsearch
+     * Search query in elasticsearch.
      *
      * @param array|string $query
+     *
      * @return mixed
      */
     protected function query($selection = '')
@@ -103,15 +115,18 @@ abstract class BaseSearch implements Search
         }
         $request = [
           'index' => $this->index,
-          'type' => $this->type,
-          'body' => $this->body($selection),
+          'type'  => $this->type,
+          'body'  => $this->body($selection),
         ];
+
         return $this->search($request);
     }
+
     /**
-     * Search query in elasticsearch
+     * Search query in elasticsearch.
      *
      * @param array|string $request
+     *
      * @return mixed
      */
     public function search($request = '')
@@ -119,6 +134,7 @@ abstract class BaseSearch implements Search
         // Clear cache on new search
         //Event::fire(new EventUpdated($this, $model));
         $results = $this->client->search($request);
+
         return $this->makeModel($results);
     }
 }

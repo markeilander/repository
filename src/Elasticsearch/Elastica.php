@@ -1,12 +1,11 @@
 <?php
+
 namespace Eilander\Repository\Elasticsearch;
 
-use Event;
-use Eilander\Repository\RepositoryException;
 use Elastica\Client as ElasticsearchClient;
+
 /**
- * Class BaseSearch
- * @package Eilander\Repository\Elasticsearch
+ * Class BaseSearch.
  */
 abstract class Elastica
 {
@@ -15,36 +14,39 @@ abstract class Elastica
      */
     protected $client;
     /**
-     * Which database should be used, defaults to config setting
+     * Which database should be used, defaults to config setting.
+     *
      * @var Index
      */
     protected $index;
     /**
-     * Which table should me used
+     * Which table should me used.
+     *
      * @var Type
      */
     protected $type;
+
     /**
      * @param Application $app
      */
     public function __construct()
     {
         list($host, $port) = explode(':', env('ELASTIC_HOST', 'localhost:9200'));
-        $elasticaClient = new ElasticsearchClient(array(
+        $elasticaClient = new ElasticsearchClient([
             'host' => $host,
-            'port' => $port
-        ));
+            'port' => $port,
+        ]);
         $this->type();
         // set default index and type
         // Load index
-        $this->index = $elasticaClient->getIndex(config("database.connections.elasticsearch.index"));
+        $this->index = $elasticaClient->getIndex(config('database.connections.elasticsearch.index'));
         //Create a type
         $elasticaType = $this->index->getType($this->type);
         $this->client = $elasticaType;
     }
 
     /**
-     * Specify Table
+     * Specify Table.
      *
      * @return string
      */
