@@ -5,13 +5,14 @@ namespace Eilander\Repository\Events\Eloquent;
 use Eilander\Repository\Events\EloquentEvent;
 
 /**
- * Clean cache when new entity/model is deleted
+ * Clean cache when new entity/model is deleted.
  *
  * @author Eilander
  */
-class Deleted extends EloquentEvent {
+class Deleted extends EloquentEvent
+{
     /**
      * @var string
      */
-    protected $action = "deleted";
+    protected $action = 'deleted';
 }

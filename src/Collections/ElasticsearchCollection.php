@@ -11,25 +11,28 @@ class ElasticsearchCollection extends Collection
     protected $shards;
     protected $hits;
     protected $aggregations = null;
+
     /**
-     * _construct
+     * _construct.
      *
      * @param   $results elasticsearch results
      * @param $instance
+     *
      * @return \Eilander\Repository\Collections\ElasticsearchCollection
      */
     public function __construct($results)
     {
         // Take our result data and map it
         // to some class properties.
-        $this->took         = $results['took'];
-        $this->timed_out    = $results['timed_out'];
-        $this->shards       = $results['_shards'];
-        $this->hits         = $results['hits'];
-        $this->aggregations = isset($results['aggregations']) ? $results['aggregations'] : array();
+        $this->took = $results['took'];
+        $this->timed_out = $results['timed_out'];
+        $this->shards = $results['_shards'];
+        $this->hits = $results['hits'];
+        $this->aggregations = isset($results['aggregations']) ? $results['aggregations'] : [];
     }
+
     /**
-     * Total Hits
+     * Total Hits.
      *
      * @return int
      */
@@ -37,8 +40,9 @@ class ElasticsearchCollection extends Collection
     {
         return $this->hits['total'];
     }
+
     /**
-     * Max Score
+     * Max Score.
      *
      * @return float
      */
@@ -46,8 +50,9 @@ class ElasticsearchCollection extends Collection
     {
         return $this->hits['max_score'];
     }
+
     /**
-     * Get Shards
+     * Get Shards.
      *
      * @return array
      */
@@ -55,8 +60,9 @@ class ElasticsearchCollection extends Collection
     {
         return $this->shards;
     }
+
     /**
-     * Took
+     * Took.
      *
      * @return string
      */
@@ -64,17 +70,19 @@ class ElasticsearchCollection extends Collection
     {
         return $this->took;
     }
+
     /**
-     * Timed Out
+     * Timed Out.
      *
      * @return bool
      */
     public function timedOut()
     {
-        return (bool)$this->timed_out;
+        return (bool) $this->timed_out;
     }
+
     /**
-     * Get Hits
+     * Get Hits.
      *
      * Get the raw hits array from
      * Elasticsearch results.
@@ -85,8 +93,9 @@ class ElasticsearchCollection extends Collection
     {
         return $this->hits;
     }
+
     /**
-     * Get aggregations
+     * Get aggregations.
      *
      * Get the raw hits array from
      * Elasticsearch results.
@@ -99,7 +108,7 @@ class ElasticsearchCollection extends Collection
     }
 
     /**
-     * Get aggregations
+     * Get aggregations.
      *
      * Get the raw hits array from
      * Elasticsearch results.
@@ -111,6 +120,5 @@ class ElasticsearchCollection extends Collection
         if (array_key_exists($name, $this->aggregations)) {
             return $this->aggregations[$name];
         }
-        return null;
     }
 }

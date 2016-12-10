@@ -1,48 +1,50 @@
 <?php
+
 namespace Eilander\Repository\Contracts;
 
 use Illuminate\Contracts\Cache\Repository as CacheRepository;
 
 /**
- * Interface CacheableInterface
- * @package Eilander\Repository\Contracts
+ * Interface CacheableInterface.
  */
 interface CacheableInterface
 {
     /**
-     * Return instance of Cache Repository
+     * Return instance of Cache Repository.
      *
      * @return CacheRepository
      */
     public function getCacheRepository();
 
     /**
-     * Get Cache key for the method
+     * Get Cache key for the method.
      *
      * @param $method
      * @param $args
+     *
      * @return string
      */
     public function getCacheKey($method, $args = null);
-    
+
     /**
-     * Return instance of CacheKeys
+     * Return instance of CacheKeys.
      *
      * @return CacheKeys
      */
     public function getCacheKeys();
 
     /**
-     * Get cache minutes
+     * Get cache minutes.
      *
      * @return int
      */
     public function getCacheMinutes();
 
     /**
-     * No Cache
+     * No Cache.
      *
      * @param bool $status
+     *
      * @return $this
      */
     public function noCache($status = true);

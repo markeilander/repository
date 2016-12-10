@@ -3,12 +3,12 @@
 namespace Eilander\Repository\Traits\Elasticsearch;
 
 /**
- * Class Filter
- * @package Eilander\Gateway\Traits\Elasticsearch
+ * Class Filter.
  */
-trait Filterable {
+trait Filterable
+{
     /**
-     * set proper filter
+     * set proper filter.
      */
     public function filter($filters)
     {
@@ -24,13 +24,13 @@ trait Filterable {
     }
 
     /**
-     * ParseFiler based on url data
+     * ParseFiler based on url data.
+     *
      * @example
      * {"provider":["kpn","vodafone"],"betweenDate":["2015-01-01","2015-12-31"]}
      *
      * "(provider: Vodafone, KPN) AND timestamp: [2015-01-01 TO 2015-12-31] AND (soreg: simonly, regular) AND (doelgroep: prepaid, postpad)"
      */
-
     private function parseUrlFilter($filters)
     {
         $filters = json_decode($filters); // return std class
@@ -43,7 +43,8 @@ trait Filterable {
                     $parsedFilters[] = $this->multi($filter, $name);
                 }
             }
-            return implode(" AND ", $parsedFilters);
+
+            return implode(' AND ', $parsedFilters);
         }
     }
 
@@ -60,14 +61,16 @@ trait Filterable {
             if ($parseExtendedBounds) {
                 $this->extendedBounds($from, $till);
             }
-            return $field.': ['.$from .' TO '. $till . ']';
+
+            return $field.': ['.$from.' TO '.$till.']';
         }
     }
 
     private function multi($filter, $field = '')
     {
         if ($field != '') {
-            $data = implode(",", $filter);
+            $data = implode(',', $filter);
+
             return '('.$field.': '.$data.')';
         }
     }

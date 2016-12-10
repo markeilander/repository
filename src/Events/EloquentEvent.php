@@ -2,15 +2,17 @@
 
 namespace Eilander\Repository\Events;
 
-use Illuminate\Database\Eloquent\Model;
 use Eilander\Repository\Contracts\Eloquent as Repository;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Queue\SerializesModels;
+
 /**
- * Description of Event
+ * Description of Event.
  *
  * @author Eilander
  */
-abstract class EloquentEvent {
+abstract class EloquentEvent
+{
     use SerializesModels;
 
     /**
@@ -30,12 +32,12 @@ abstract class EloquentEvent {
 
     /**
      * @param RepositoryInterface $repository
-     * @param Model $model
+     * @param Model               $model
      */
     public function __construct(Repository $repository, Model $model)
     {
-        $this->repository   = $repository;
-        $this->model        = $model;
+        $this->repository = $repository;
+        $this->model = $model;
     }
 
     /**

@@ -3,12 +3,12 @@
 namespace Eilander\Repository\Traits\Elasticsearch;
 
 /**
- * Parser
- * @package Eilander\Repository\Traits\Elasticsearch
+ * Parser.
  */
-trait Parser{
+trait Parser
+{
     /**
-     * set extended bounds for use with date histogram
+     * set extended bounds for use with date histogram.
      */
     protected function dateHistogram($field = 'timestamp', $format = 'yyyy-MM-dd', $interval = 'month')
     {
@@ -24,9 +24,10 @@ trait Parser{
     }
 
     /**
-     * Search query in elasticsearch
+     * Search query in elasticsearch.
      *
      * @param array|string $request
+     *
      * @return mixed
      */
     protected function body($selection = '')

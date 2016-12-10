@@ -3,12 +3,12 @@
 namespace Eilander\Repository\Events;
 
 /**
- * Description of Event
+ * Description of Event.
  *
  * @author Eilander
  */
-abstract class ElasticsearchEvent {
-
+abstract class ElasticsearchEvent
+{
     /**
      * @var string
      */
@@ -19,7 +19,7 @@ abstract class ElasticsearchEvent {
      */
     public function __construct($tag)
     {
-        $this->tag   = $tag;
+        $this->tag = $tag;
     }
 
     /**
