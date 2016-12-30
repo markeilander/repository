@@ -3,15 +3,15 @@
 namespace Eilander\Repository\Contracts;
 
 /**
- * Interface UploadRepository
+ * Interface UploadRepository.
  */
-interface UploadRepository extends Repository
+interface Upload extends Repository
 {
     /**
-     * Upload file
+     * Upload file.
      *
      * @param string $file file to upload
-     * @param array $data
+     * @param array  $data
      *
      * @return mixed
      */
