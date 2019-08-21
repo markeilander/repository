@@ -3,7 +3,6 @@
 namespace Eilander\Repository\Listeners;
 
 use Eilander\Repository\CacheKeys;
-use Eilander\Repository\Contracts\Eloquent as Repository;
 use Eilander\Repository\Events\EloquentEvent;
 use Illuminate\Database\Eloquent\Model;
 

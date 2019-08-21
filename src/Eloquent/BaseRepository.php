@@ -196,11 +196,11 @@ abstract class BaseRepository implements Repository
     {
         $model = $this->model->newInstance($attributes);
         // Create slug before save
-        Event::fire(new EventCreating($this, $model));
+        Event::dispatch(new EventCreating($this, $model));
         $model->save();
         $this->resetModel();
         // Clear cache on save
-        Event::fire(new EventCreated($this, $model));
+        Event::dispatch(new EventCreated($this, $model));
 
         return $this->parserResult($model);
     }
@@ -222,7 +222,7 @@ abstract class BaseRepository implements Repository
         $model->save();
         $this->resetModel();
         // Clear cache on save
-        Event::fire(new EventUpdated($this, $model));
+        Event::dispatch(new EventUpdated($this, $model));
 
         return $this->parserResult($model);
     }
@@ -241,7 +241,7 @@ abstract class BaseRepository implements Repository
 
         $this->resetModel();
         // Clear cache on delete
-        Event::fire(new EventDeleted($this, $model));
+        Event::dispatch(new EventDeleted($this, $model));
 
         return $deleted;
     }
