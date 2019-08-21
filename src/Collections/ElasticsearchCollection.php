@@ -15,7 +15,7 @@ class ElasticsearchCollection extends Collection
     /**
      * _construct.
      *
-     * @param   $results elasticsearch results
+     * @param $results elasticsearch results
      * @param $instance
      *
      * @return \Eilander\Repository\Collections\ElasticsearchCollection
